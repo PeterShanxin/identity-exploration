@@ -306,14 +306,36 @@ footer {
   .audio-block { flex-wrap: wrap; }
   .audio-block audio { max-width: 100%; }
 }
+.lang-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 200;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.lang-btn:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+}
 </style>
 </head>
 <body>
+<button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
 <div class="wrap">
 
 <header>
-  <h1>同一性过早定型与 Gap Year</h1>
-  <p>从 Marcia 身份理论出发，理解中国社会时钟如何系统性取消自我探索，以及 Gap Year 的心理学意义</p>
+  <h1 data-i18n="header_h1">同一性过早定型与 Gap Year</h1>
+  <p data-i18n="header_p">从 Marcia 身份理论出发，理解中国社会时钟如何系统性取消自我探索，以及 Gap Year 的心理学意义</p>
 </header>
 
 <div class="audio-block">
@@ -323,171 +345,359 @@ footer {
     </svg>
   </div>
   <div class="audio-meta">
-    <p class="audio-title">AI 深度解读音频</p>
-    <p class="audio-sub">NotebookLM 生成 - 18 分钟</p>
+    <p class="audio-title" data-i18n="audio_title">AI 深度解读音频</p>
+    <p class="audio-sub" data-i18n="audio_sub">NotebookLM 生成 - 18 分钟</p>
   </div>
   <audio controls preload="metadata">
     <source src="audio.ogg" type="audio/ogg">
     <source src="audio.m4a" type="audio/mp4">
-    浏览器不支持音频播放
+    <span data-i18n="audio_fallback">浏览器不支持音频播放</span>
   </audio>
 </div>
 
 <div class="nav" id="nav">
-  <button class="on" onclick="show(0)">Marcia 身份理论</button>
-  <button onclick="show(1)">中国社会时钟</button>
-  <button onclick="show(2)">过早定型与后果</button>
-  <button onclick="show(3)">Gap Year 的意义</button>
-  <button onclick="show(4)">如何自我探索</button>
+  <button class="on" onclick="show(0)" data-i18n="nav_0">Marcia 身份理论</button>
+  <button onclick="show(1)" data-i18n="nav_1">中国社会时钟</button>
+  <button onclick="show(2)" data-i18n="nav_2">过早定型与后果</button>
+  <button onclick="show(3)" data-i18n="nav_3">Gap Year 的意义</button>
+  <button onclick="show(4)" data-i18n="nav_4">如何自我探索</button>
 </div>
 
 <div class="pnl on" id="p0">
   <div class="cd">
-    <h3>Erikson → Marcia: 身份探索的心理学基础</h3>
-    <p>Erik Erikson 认为青少年期的核心任务是建立"同一性"(identity) - 即回答"我是谁"。James Marcia 在此基础上提出四种身份状态，由两个维度决定：<strong>探索</strong>（是否主动尝试不同可能性）和<strong>承诺</strong>（是否做出选择并认同）。</p>
+    <h3 data-i18n="s0_cd_h3">Erikson → Marcia: 身份探索的心理学基础</h3>
+    <p data-i18n="s0_cd_p">Erik Erikson 认为青少年期的核心任务是建立"同一性"(identity) - 即回答"我是谁"。James Marcia 在此基础上提出四种身份状态，由两个维度决定：<strong>探索</strong>（是否主动尝试不同可能性）和<strong>承诺</strong>（是否做出选择并认同）。</p>
   </div>
-  <p style="font-size:0.8125rem;color:var(--text-secondary);margin:0 0 8px">点击下方卡片查看详情：</p>
-  <div class="sb sb-d" onclick="showD(0,this)" style="margin:0 0 8px"><h4>身份扩散 Diffusion</h4><p>低探索 + 低承诺</p></div>
+  <p style="font-size:0.8125rem;color:var(--text-secondary);margin:0 0 8px" data-i18n="s0_hint">点击下方卡片查看详情：</p>
+  <div class="sb sb-d" onclick="showD(0,this)" style="margin:0 0 8px"><h4 data-i18n="s0_d0_h">身份扩散 Diffusion</h4><p data-i18n="s0_d0_p">低探索 + 低承诺</p></div>
   <div class="db det-inline" id="det0"></div>
-  <div class="sb sb-f" onclick="showD(1,this)" style="margin:0 0 8px"><h4>同一性过早定型 Foreclosure</h4><p>低探索 + 高承诺</p></div>
+  <div class="sb sb-f" onclick="showD(1,this)" style="margin:0 0 8px"><h4 data-i18n="s0_d1_h">同一性过早定型 Foreclosure</h4><p data-i18n="s0_d1_p">低探索 + 高承诺</p></div>
   <div class="db det-inline" id="det1"></div>
-  <div class="sb sb-m" onclick="showD(2,this)" style="margin:0 0 8px"><h4>延缓/探索期 Moratorium</h4><p>高探索 + 低承诺</p></div>
+  <div class="sb sb-m" onclick="showD(2,this)" style="margin:0 0 8px"><h4 data-i18n="s0_d2_h">延缓/探索期 Moratorium</h4><p data-i18n="s0_d2_p">高探索 + 低承诺</p></div>
   <div class="db det-inline" id="det2"></div>
-  <div class="sb sb-a" onclick="showD(3,this)" style="margin:0 0 8px"><h4>身份达成 Achievement</h4><p>高探索 + 高承诺</p></div>
+  <div class="sb sb-a" onclick="showD(3,this)" style="margin:0 0 8px"><h4 data-i18n="s0_d3_h">身份达成 Achievement</h4><p data-i18n="s0_d3_p">高探索 + 高承诺</p></div>
   <div class="db det-inline" id="det3"></div>
   <div class="af">
-    <span class="st" style="background:#FCEBEB;color:#791F1F">扩散</span><span class="ar">→</span>
-    <span class="st" style="background:#E6F1FB;color:#0C447C">延缓期</span><span class="ar">→</span>
-    <span class="st" style="background:#EAF3DE;color:#27500A">达成</span>
+    <span class="st" style="background:#FCEBEB;color:#791F1F" data-i18n="s0_flow_d">扩散</span><span class="ar">→</span>
+    <span class="st" style="background:#E6F1FB;color:#0C447C" data-i18n="s0_flow_m">延缓期</span><span class="ar">→</span>
+    <span class="st" style="background:#EAF3DE;color:#27500A" data-i18n="s0_flow_a">达成</span>
   </div>
-  <p class="sub">健康的发展路径：经历探索 → 做出承诺</p>
+  <p class="sub" data-i18n="s0_flow_sub">健康的发展路径：经历探索 → 做出承诺</p>
 </div>
 
 <div class="pnl" id="p1">
   <div class="cd">
-    <h3>中国社会时钟：环环相扣的人生轨道</h3>
-    <p>中国社会对每个年龄节点都有严格的"标准答案"。偏离即承受舆论压力与资源剥夺，试错成本极高。</p>
+    <h3 data-i18n="s1_cd_h3">中国社会时钟：环环相扣的人生轨道</h3>
+    <p data-i18n="s1_cd_p">中国社会对每个年龄节点都有严格的"标准答案"。偏离即承受舆论压力与资源剥夺，试错成本极高。</p>
   </div>
   <div class="tl">
-    <div class="ev"><div class="dt"></div><span class="ag">3-18 岁</span><div class="ds">幼儿园 → 小学 → 初中 → 高中。中考淘汰 40%，高考独木桥。没有喘息空间。</div></div>
-    <div class="ev"><div class="dt"></div><span class="ag">18 岁</span><div class="ds">高考选专业 - 未曾真实接触世界，却要凭想象押注终身方向。<span class="tg tg-r">关键决策点</span></div></div>
-    <div class="ev"><div class="dt"></div><span class="ag">22-24 岁</span><div class="ds">应届生身份 = "黄金光环"。一旦 gap，光环消失，简历留下"案底"。<span class="tg tg-a">应届窗口</span></div></div>
-    <div class="ev"><div class="dt"></div><span class="ag">25-30 岁</span><div class="ds">入职、升迁、催婚、催生。三十而立的 deadline。</div></div>
-    <div class="ev"><div class="dt"></div><span class="ag">35 岁</span><div class="ds">公务员报考年龄上限。七成人晋升停滞在 35 岁前。八成岗位要求 35 岁以下。<span class="tg tg-r">35 岁天花板</span></div></div>
+    <div class="ev"><div class="dt"></div><span class="ag" data-i18n="s1_ev0_age">3-18 岁</span><div class="ds" data-i18n="s1_ev0_ds">幼儿园 → 小学 → 初中 → 高中。中考淘汰 40%，高考独木桥。没有喘息空间。</div></div>
+    <div class="ev"><div class="dt"></div><span class="ag" data-i18n="s1_ev1_age">18 岁</span><div class="ds" data-i18n="s1_ev1_ds">高考选专业 - 未曾真实接触世界，却要凭想象押注终身方向。<span class="tg tg-r">关键决策点</span></div></div>
+    <div class="ev"><div class="dt"></div><span class="ag" data-i18n="s1_ev2_age">22-24 岁</span><div class="ds" data-i18n="s1_ev2_ds">应届生身份 = "黄金光环"。一旦 gap，光环消失，简历留下"案底"。<span class="tg tg-a">应届窗口</span></div></div>
+    <div class="ev"><div class="dt"></div><span class="ag" data-i18n="s1_ev3_age">25-30 岁</span><div class="ds" data-i18n="s1_ev3_ds">入职、升迁、催婚、催生。三十而立的 deadline。</div></div>
+    <div class="ev"><div class="dt"></div><span class="ag" data-i18n="s1_ev4_age">35 岁</span><div class="ds" data-i18n="s1_ev4_ds">公务员报考年龄上限。七成人晋升停滞在 35 岁前。八成岗位要求 35 岁以下。<span class="tg tg-r">35 岁天花板</span></div></div>
   </div>
   <div class="g2">
-    <div class="mt"><div class="n">16.5%</div><div class="l">16-24 岁青年失业率 (2025.3)</div></div>
-    <div class="mt"><div class="n">~40%</div><div class="l">因"空窗期"失去工作机会</div></div>
+    <div class="mt"><div class="n">16.5%</div><div class="l" data-i18n="s1_stat0_l">16-24 岁青年失业率 (2025.3)</div></div>
+    <div class="mt"><div class="n">~40%</div><div class="l" data-i18n="s1_stat1_l">因"空窗期"失去工作机会</div></div>
   </div>
   <div class="cd" style="margin-top:14px">
-    <h3>核心矛盾</h3>
-    <p>社会一边倡导"多元人生"，一边用"连续就业"评判价值。高校鼓励"探索自我"，企业要求"稳定产出"。Marcia 理论所需的探索期 (moratorium)，在中国被社会时钟系统性取消了。</p>
+    <h3 data-i18n="s1_core_h3">核心矛盾</h3>
+    <p data-i18n="s1_core_p">社会一边倡导"多元人生"，一边用"连续就业"评判价值。高校鼓励"探索自我"，企业要求"稳定产出"。Marcia 理论所需的探索期 (moratorium)，在中国被社会时钟系统性取消了。</p>
   </div>
 </div>
 
 <div class="pnl" id="p2">
   <div class="cd" style="border-left:3px solid #BA7517;border-radius:0">
-    <h3>同一性过早定型 (Identity Foreclosure)</h3>
-    <p>视频的核心概念。个体在<strong>未经探索</strong>的情况下直接接受了父母、社会赋予的身份和价值观。表面上有明确目标和承诺，实际上从未真正问过自己"我要什么"。</p>
+    <h3 data-i18n="s2_main_h3">同一性过早定型 (Identity Foreclosure)</h3>
+    <p data-i18n="s2_main_p">视频的核心概念。个体在<strong>未经探索</strong>的情况下直接接受了父母、社会赋予的身份和价值观。表面上有明确目标和承诺，实际上从未真正问过自己"我要什么"。</p>
   </div>
   <div class="cr">
-    <div class="c" style="border-top:3px solid #A32D2D;border-radius:0"><h4 style="color:var(--text-danger)">表面看起来</h4><p>目标明确、努力上进、情绪稳定、社会认可度高</p></div>
-    <div class="c" style="border-top:3px solid #185FA5;border-radius:0"><h4 style="color:var(--text-info)">内在真相</h4><p>缺乏自主性、思维僵化、权威依赖、对不确定性高度焦虑</p></div>
+    <div class="c" style="border-top:3px solid #A32D2D;border-radius:0"><h4 style="color:var(--text-danger)" data-i18n="s2_sur_h4">表面看起来</h4><p data-i18n="s2_sur_p">目标明确、努力上进、情绪稳定、社会认可度高</p></div>
+    <div class="c" style="border-top:3px solid #185FA5;border-radius:0"><h4 style="color:var(--text-info)" data-i18n="s2_inn_h4">内在真相</h4><p data-i18n="s2_inn_p">缺乏自主性、思维僵化、权威依赖、对不确定性高度焦虑</p></div>
   </div>
-  <div class="cd"><h3>过早定型的后果</h3><p>研究表明，foreclosure 并非"没有问题的稳定"，而是一种脆弱的伪稳定。一旦外部环境发生变化，整个人生叙事可能瞬间崩塌。</p></div>
+  <div class="cd"><h3 data-i18n="s2_cons_h3">过早定型的后果</h3><p data-i18n="s2_cons_p">研究表明，foreclosure 并非"没有问题的稳定"，而是一种脆弱的伪稳定。一旦外部环境发生变化，整个人生叙事可能瞬间崩塌。</p></div>
   <div class="cg">
-    <div class="ci" style="border-left-color:#A32D2D"><h5>心理僵化与封闭</h5><p>高度权威主义，难以接受不同观点。面对新信息时防御性强，拒绝反思已有信念。</p></div>
-    <div class="ci" style="border-left-color:#A32D2D"><h5>中年意义危机</h5><p>25-35 岁时突然意识到自己活在别人的脚本里。绩效优异却内心空虚疲惫 - "胜任感 ≠ 意义感"。</p></div>
-    <div class="ci" style="border-left-color:#854F0B"><h5>脆弱的自尊</h5><p>表面自尊较高，但完全建立在外部认可上。一旦失去职位、身份标签，自我价值体系崩溃。</p></div>
-    <div class="ci" style="border-left-color:#854F0B"><h5>情绪内射调节</h5><p>将外界要求内化为自我苛责。努力的本质是"为认可而自我剥削"，持续压抑真实情绪。</p></div>
-    <div class="ci" style="border-left-color:#534AB7"><h5>关系浅层化</h5><p>自我与抚养者的心理融合未分化，难以建立真正独立、亲密的成人关系。</p></div>
-    <div class="ci" style="border-left-color:#534AB7"><h5>延迟但更剧烈的危机</h5><p>Marcia 指出，foreclosure 者遭遇失衡时，后果比其他状态更具破坏性 - 因为从未学过如何重建。</p></div>
+    <div class="ci" style="border-left-color:#A32D2D"><h5 data-i18n="s2_ci0_h5">心理僵化与封闭</h5><p data-i18n="s2_ci0_p">高度权威主义，难以接受不同观点。面对新信息时防御性强，拒绝反思已有信念。</p></div>
+    <div class="ci" style="border-left-color:#A32D2D"><h5 data-i18n="s2_ci1_h5">中年意义危机</h5><p data-i18n="s2_ci1_p">25-35 岁时突然意识到自己活在别人的脚本里。绩效优异却内心空虚疲惫 - "胜任感 ≠ 意义感"。</p></div>
+    <div class="ci" style="border-left-color:#854F0B"><h5 data-i18n="s2_ci2_h5">脆弱的自尊</h5><p data-i18n="s2_ci2_p">表面自尊较高，但完全建立在外部认可上。一旦失去职位、身份标签，自我价值体系崩溃。</p></div>
+    <div class="ci" style="border-left-color:#854F0B"><h5 data-i18n="s2_ci3_h5">情绪内射调节</h5><p data-i18n="s2_ci3_p">将外界要求内化为自我苛责。努力的本质是"为认可而自我剥削"，持续压抑真实情绪。</p></div>
+    <div class="ci" style="border-left-color:#534AB7"><h5 data-i18n="s2_ci4_h5">关系浅层化</h5><p data-i18n="s2_ci4_p">自我与抚养者的心理融合未分化，难以建立真正独立、亲密的成人关系。</p></div>
+    <div class="ci" style="border-left-color:#534AB7"><h5 data-i18n="s2_ci5_h5">延迟但更剧烈的危机</h5><p data-i18n="s2_ci5_p">Marcia 指出，foreclosure 者遭遇失衡时，后果比其他状态更具破坏性 - 因为从未学过如何重建。</p></div>
   </div>
   <div class="cd">
-    <h3>中国社会如何批量制造 foreclosure</h3>
-    <div style="margin:6px 0"><span class="tg tg-a">高考选专业</span> 17 岁凭想象决定终身方向</div>
-    <div style="margin:6px 0"><span class="tg tg-a">社会节奏刚性</span> 升学-入职-结婚-生子，节点严丝合缝</div>
-    <div style="margin:6px 0"><span class="tg tg-a">偏离惩罚</span> 35 岁考公限制、空窗期歧视、同辈压力</div>
-    <div style="margin:6px 0"><span class="tg tg-a">内射调节</span> 将外界要求内化为自我苛责，"为认可而自我剥削"</div>
+    <h3 data-i18n="s2_mfg_h3">中国社会如何批量制造 foreclosure</h3>
+    <div style="margin:6px 0"><span class="tg tg-a" data-i18n="s2_mfg_t0">高考选专业</span> <span data-i18n="s2_mfg_d0">17 岁凭想象决定终身方向</span></div>
+    <div style="margin:6px 0"><span class="tg tg-a" data-i18n="s2_mfg_t1">社会节奏刚性</span> <span data-i18n="s2_mfg_d1">升学-入职-结婚-生子，节点严丝合缝</span></div>
+    <div style="margin:6px 0"><span class="tg tg-a" data-i18n="s2_mfg_t2">偏离惩罚</span> <span data-i18n="s2_mfg_d2">35 岁考公限制、空窗期歧视、同辈压力</span></div>
+    <div style="margin:6px 0"><span class="tg tg-a" data-i18n="s2_mfg_t3">内射调节</span> <span data-i18n="s2_mfg_d3">将外界要求内化为自我苛责，"为认可而自我剥削"</span></div>
   </div>
   <div class="cd">
-    <h3>视频中的两个案例</h3>
-    <p><strong>朋友</strong> - 停职数年，每日 2 小时处理业务，生活松弛。作者看到后不是羡慕，而是强烈自我怀疑：原来自己习以为常的紧绷和内耗并非唯一答案。</p>
-    <p><strong>饺子导演</strong> - 华西医科大毕业后蛰伏 3 年 8 个月，自学 3D 动画，拒绝了"医生"身份的过早绑定。如果屈服于社会脚本，不会有《哪吒》。</p>
+    <h3 data-i18n="s2_case_h3">视频中的两个案例</h3>
+    <p data-i18n="s2_case_p0"><strong>朋友</strong> - 停职数年，每日 2 小时处理业务，生活松弛。作者看到后不是羡慕，而是强烈自我怀疑：原来自己习以为常的紧绷和内耗并非唯一答案。</p>
+    <p data-i18n="s2_case_p1"><strong>饺子导演</strong> - 华西医科大毕业后蛰伏 3 年 8 个月，自学 3D 动画，拒绝了"医生"身份的过早绑定。如果屈服于社会脚本，不会有《哪吒》。</p>
   </div>
 </div>
 
 <div class="pnl" id="p3">
   <div class="cd">
-    <h3>Gap Year 不是休假，是 moratorium 的入口</h3>
-    <p>心理学意义上，Gap Year 的价值不在于"休息"，而在于它创造了 Marcia 所说的<strong>moratorium（延缓探索期）</strong>的条件：脱离既有轨道，获得心理空间，主动探索"我是谁"和"我要什么"。</p>
+    <h3 data-i18n="s3_cd_h3">Gap Year 不是休假，是 moratorium 的入口</h3>
+    <p data-i18n="s3_cd_p">心理学意义上，Gap Year 的价值不在于"休息"，而在于它创造了 Marcia 所说的<strong>moratorium（延缓探索期）</strong>的条件：脱离既有轨道，获得心理空间，主动探索"我是谁"和"我要什么"。</p>
   </div>
   <div class="cr">
-    <div class="c" style="border-top:3px solid #185FA5;border-radius:0"><h4 style="color:var(--text-info)">西方</h4><p>Gap Year 被视为"探索期"，企业甚至提供带薪休假。大学录取可 defer。社会容忍试错。</p></div>
-    <div class="c" style="border-top:3px solid #A32D2D;border-radius:0"><h4 style="color:var(--text-danger)">中国</h4><p>Gap = 职场"案底"。应届身份不可恢复。中国式 gap year 被异化为"备考年"或"内卷年"。</p></div>
+    <div class="c" style="border-top:3px solid #185FA5;border-radius:0"><h4 style="color:var(--text-info)" data-i18n="s3_west_h4">西方</h4><p data-i18n="s3_west_p">Gap Year 被视为"探索期"，企业甚至提供带薪休假。大学录取可 defer。社会容忍试错。</p></div>
+    <div class="c" style="border-top:3px solid #A32D2D;border-radius:0"><h4 style="color:var(--text-danger)" data-i18n="s3_cn_h4">中国</h4><p data-i18n="s3_cn_p">Gap = 职场"案底"。应届身份不可恢复。中国式 gap year 被异化为"备考年"或"内卷年"。</p></div>
   </div>
   <div class="cd">
-    <h3>Gap Year 为什么令人恐惧</h3>
-    <p>视频的核心洞察：年轻人不敢 gap 的根本原因<strong>不是怕没钱</strong>，而是怕在彻底松绑后被迫直面一个无法回避的终极问题 - "我的生活，真的有意义吗？"</p>
-    <p>一旦切断高强度约束环境，获得大把复盘时间，极大概率会得出一个令人崩溃的结论 - 过去几十年拼尽全力的活法，从头到尾全错了。</p>
-    <p style="font-size:0.8125rem;color:var(--text-tertiary)">但视频指出：这种崩溃恰恰是旧认知地基坍塌的信号。唯一的出路，是亲手重建一个忠于内在的真实自我。</p>
+    <h3 data-i18n="s3_fear_h3">Gap Year 为什么令人恐惧</h3>
+    <p data-i18n="s3_fear_p1">视频的核心洞察：年轻人不敢 gap 的根本原因<strong>不是怕没钱</strong>，而是怕在彻底松绑后被迫直面一个无法回避的终极问题 - "我的生活，真的有意义吗？"</p>
+    <p data-i18n="s3_fear_p2">一旦切断高强度约束环境，获得大把复盘时间，极大概率会得出一个令人崩溃的结论 - 过去几十年拼尽全力的活法，从头到尾全错了。</p>
+    <p style="font-size:0.8125rem;color:var(--text-tertiary)" data-i18n="s3_fear_sub">但视频指出：这种崩溃恰恰是旧认知地基坍塌的信号。唯一的出路，是亲手重建一个忠于内在的真实自我。</p>
   </div>
   <div class="af">
-    <span class="st" style="background:#FAEEDA;color:#633806">Foreclosure</span><span class="ar">→</span>
-    <span class="st" style="background:#FCEBEB;color:#791F1F">Gap 崩溃期</span><span class="ar">→</span>
-    <span class="st" style="background:#E6F1FB;color:#0C447C">Moratorium</span><span class="ar">→</span>
-    <span class="st" style="background:#EAF3DE;color:#27500A">Achievement</span>
+    <span class="st" style="background:#FAEEDA;color:#633806" data-i18n="s3_flow_f">Foreclosure</span><span class="ar">→</span>
+    <span class="st" style="background:#FCEBEB;color:#791F1F" data-i18n="s3_flow_c">Gap 崩溃期</span><span class="ar">→</span>
+    <span class="st" style="background:#E6F1FB;color:#0C447C" data-i18n="s3_flow_m">Moratorium</span><span class="ar">→</span>
+    <span class="st" style="background:#EAF3DE;color:#27500A" data-i18n="s3_flow_a">Achievement</span>
   </div>
 </div>
 
 <div class="pnl" id="p4">
   <div class="cd">
-    <h3>从 foreclosure 走向 achievement 的路径</h3>
-    <p>不一定需要完整的 gap year。关键是创造"心理上的 moratorium" - 在结构化生活中嵌入自我探索的空间。</p>
+    <h3 data-i18n="s4_cd_h3">从 foreclosure 走向 achievement 的路径</h3>
+    <p data-i18n="s4_cd_p">不一定需要完整的 gap year。关键是创造"心理上的 moratorium" - 在结构化生活中嵌入自我探索的空间。</p>
   </div>
   <div class="cd">
-    <h3>自我探索的三个维度</h3>
-    <div style="margin:8px 0"><span class="tg tg-b">职业/学术</span> 尝试不同领域，而非只走"安全路线"。实习、side project、跨学科课程。</div>
-    <div style="margin:8px 0"><span class="tg tg-g">价值观/信念</span> 审视哪些是自己的，哪些是父母和社会灌输的。写日记，与不同背景的人深度交流。</div>
-    <div style="margin:8px 0"><span class="tg tg-a">关系/角色</span> 探索"我想成为什么样的人"，而不是"别人期待我成为什么人"。</div>
+    <h3 data-i18n="s4_dims_h3">自我探索的三个维度</h3>
+    <div style="margin:8px 0"><span class="tg tg-b" data-i18n="s4_t0">职业/学术</span> <span data-i18n="s4_d0">尝试不同领域，而非只走"安全路线"。实习、side project、跨学科课程。</span></div>
+    <div style="margin:8px 0"><span class="tg tg-g" data-i18n="s4_t1">价值观/信念</span> <span data-i18n="s4_d1">审视哪些是自己的，哪些是父母和社会灌输的。写日记，与不同背景的人深度交流。</span></div>
+    <div style="margin:8px 0"><span class="tg tg-a" data-i18n="s4_t2">关系/角色</span> <span data-i18n="s4_d2">探索"我想成为什么样的人"，而不是"别人期待我成为什么人"。</span></div>
   </div>
   <div class="cd">
-    <h3>一些具体练习</h3>
-    <p><strong>价值观排序</strong> - 列出 20 个你认为重要的价值（自由、安全、创造力、金钱、家庭...），排出真正的优先级，区分"我的"和"被灌输的"。</p>
-    <p><strong>"如果没人知道"测试</strong> - 如果没有任何社会评价，你明天会做什么？这个答案和你现在的生活差距有多大？</p>
-    <p><strong>角色剥离</strong> - 剥离职级、公司、社会标签后，"你"究竟是谁？（视频原话）</p>
-    <p><strong>小型实验</strong> - 不需要 gap year，用一个周末/假期去体验一种完全不同的生活方式。</p>
+    <h3 data-i18n="s4_ex_h3">一些具体练习</h3>
+    <p data-i18n="s4_ex_p0"><strong>价值观排序</strong> - 列出 20 个你认为重要的价值（自由、安全、创造力、金钱、家庭...），排出真正的优先级，区分"我的"和"被灌输的"。</p>
+    <p data-i18n="s4_ex_p1"><strong>"如果没人知道"测试</strong> - 如果没有任何社会评价，你明天会做什么？这个答案和你现在的生活差距有多大？</p>
+    <p data-i18n="s4_ex_p2"><strong>角色剥离</strong> - 剥离职级、公司、社会标签后，"你"究竟是谁？（视频原话）</p>
+    <p data-i18n="s4_ex_p3"><strong>小型实验</strong> - 不需要 gap year，用一个周末/假期去体验一种完全不同的生活方式。</p>
   </div>
 </div>
 
 <footer>
-  <p>基于小红书视频"Gap Year不是休假，是人生系统的强制重启"整理</p>
-  <p>心理学理论来源：Erik Erikson (1968), James Marcia (1966)</p>
-  <p>中国数据来源：国家统计局、前程无忧、澎湃新闻</p>
+  <p data-i18n="footer_p0">基于小红书视频"Gap Year不是休假，是人生系统的强制重启"整理</p>
+  <p data-i18n="footer_p1">心理学理论来源：Erik Erikson (1968), James Marcia (1966)</p>
+  <p data-i18n="footer_p2">中国数据来源：国家统计局、前程无忧、澎湃新闻</p>
 </footer>
 
 </div>
 
 <script>
-var dts=[
-  '<strong>身份扩散 (Diffusion)</strong> - 既没有探索，也没有承诺。对"我是谁"没有兴趣或感到迷茫。研究表明与抑郁、低自尊关联最强。在中国语境中，可能表现为"摆烂"或"佛系"。',
-  '<strong>同一性过早定型 (Foreclosure)</strong> - 没有探索就直接做出了承诺。典型例子：父亲做什么，儿子也做什么，从未思考过。表面很"稳"，但内心僵化、封闭、依赖权威。中国高考选专业就是典型案例。<em>这是视频讨论的核心状态。</em>',
-  '<strong>延缓/探索期 (Moratorium)</strong> - 正在积极探索，尚未做出承诺。这个阶段焦虑最高，但也是通向 achievement 的必经之路。Gap Year 本质上就是创造这个阶段的条件。Marcia 认为这是最有发展潜力的状态。',
-  '<strong>身份达成 (Achievement)</strong> - 经历了充分探索后做出的承诺。内在驱动、灵活思考、成熟的人际关系。研究显示与最高水平的心理健康和生活满意度相关。大多数人要到成年早期甚至更晚才能达到。'
-];
-function show(i){
-  document.querySelectorAll('.pnl').forEach(function(p){p.classList.remove('on')});
-  document.querySelectorAll('.nav button').forEach(function(b){b.classList.remove('on')});
-  document.getElementById('p'+i).classList.add('on');
+var lang = 'zh';
+var T = {
+  zh: {
+    pageTitle: '同一性过早定型 - Gap Year 与自我探索',
+    metaDesc: '从 Marcia 身份理论理解中国社会时钟、同一性过早定型与 Gap Year 的心理学意义',
+    langBtn: 'EN',
+    header_h1: '同一性过早定型与 Gap Year',
+    header_p: '从 Marcia 身份理论出发，理解中国社会时钟如何系统性取消自我探索，以及 Gap Year 的心理学意义',
+    audio_title: 'AI 深度解读音频',
+    audio_sub: 'NotebookLM 生成 - 18 分钟',
+    audio_fallback: '浏览器不支持音频播放',
+    nav_0: 'Marcia 身份理论', nav_1: '中国社会时钟', nav_2: '过早定型与后果', nav_3: 'Gap Year 的意义', nav_4: '如何自我探索',
+    s0_cd_h3: 'Erikson → Marcia: 身份探索的心理学基础',
+    s0_cd_p: 'Erik Erikson 认为青少年期的核心任务是建立\u201c同一性\u201d(identity) - 即回答\u201c我是谁\u201d。James Marcia 在此基础上提出四种身份状态，由两个维度决定：<strong>探索</strong>（是否主动尝试不同可能性）和<strong>承诺</strong>（是否做出选择并认同）。',
+    s0_hint: '点击下方卡片查看详情：',
+    s0_d0_h: '身份扩散 Diffusion', s0_d0_p: '低探索 + 低承诺',
+    s0_d1_h: '同一性过早定型 Foreclosure', s0_d1_p: '低探索 + 高承诺',
+    s0_d2_h: '延缓/探索期 Moratorium', s0_d2_p: '高探索 + 低承诺',
+    s0_d3_h: '身份达成 Achievement', s0_d3_p: '高探索 + 高承诺',
+    s0_flow_d: '扩散', s0_flow_m: '延缓期', s0_flow_a: '达成',
+    s0_flow_sub: '健康的发展路径：经历探索 → 做出承诺',
+    s1_cd_h3: '中国社会时钟：环环相扣的人生轨道',
+    s1_cd_p: '中国社会对每个年龄节点都有严格的\u201c标准答案\u201d。偏离即承受舆论压力与资源剥夺，试错成本极高。',
+    s1_ev0_age: '3-18 岁', s1_ev0_ds: '幼儿园 → 小学 → 初中 → 高中。中考淘汰 40%，高考独木桥。没有喘息空间。',
+    s1_ev1_age: '18 岁', s1_ev1_ds: '高考选专业 - 未曾真实接触世界，却要凭想象押注终身方向。<span class="tg tg-r">关键决策点</span>',
+    s1_ev2_age: '22-24 岁', s1_ev2_ds: '应届生身份 = \u201c黄金光环\u201d。一旦 gap，光环消失，简历留下\u201c案底\u201d。<span class="tg tg-a">应届窗口</span>',
+    s1_ev3_age: '25-30 岁', s1_ev3_ds: '入职、升迁、催婚、催生。三十而立的 deadline。',
+    s1_ev4_age: '35 岁', s1_ev4_ds: '公务员报考年龄上限。七成人晋升停滞在 35 岁前。八成岗位要求 35 岁以下。<span class="tg tg-r">35 岁天花板</span>',
+    s1_stat0_l: '16-24 岁青年失业率 (2025.3)', s1_stat1_l: '因\u201c空窗期\u201d失去工作机会',
+    s1_core_h3: '核心矛盾',
+    s1_core_p: '社会一边倡导\u201c多元人生\u201d，一边用\u201c连续就业\u201d评判价值。高校鼓励\u201c探索自我\u201d，企业要求\u201c稳定产出\u201d。Marcia 理论所需的探索期 (moratorium)，在中国被社会时钟系统性取消了。',
+    s2_main_h3: '同一性过早定型 (Identity Foreclosure)',
+    s2_main_p: '视频的核心概念。个体在<strong>未经探索</strong>的情况下直接接受了父母、社会赋予的身份和价值观。表面上有明确目标和承诺，实际上从未真正问过自己\u201c我要什么\u201d。',
+    s2_sur_h4: '表面看起来', s2_sur_p: '目标明确、努力上进、情绪稳定、社会认可度高',
+    s2_inn_h4: '内在真相', s2_inn_p: '缺乏自主性、思维僵化、权威依赖、对不确定性高度焦虑',
+    s2_cons_h3: '过早定型的后果',
+    s2_cons_p: '研究表明，foreclosure 并非\u201c没有问题的稳定\u201d，而是一种脆弱的伪稳定。一旦外部环境发生变化，整个人生叙事可能瞬间崩塌。',
+    s2_ci0_h5: '心理僵化与封闭', s2_ci0_p: '高度权威主义，难以接受不同观点。面对新信息时防御性强，拒绝反思已有信念。',
+    s2_ci1_h5: '中年意义危机', s2_ci1_p: '25-35 岁时突然意识到自己活在别人的脚本里。绩效优异却内心空虚疲惫 - \u201c胜任感 ≠ 意义感\u201d。',
+    s2_ci2_h5: '脆弱的自尊', s2_ci2_p: '表面自尊较高，但完全建立在外部认可上。一旦失去职位、身份标签，自我价值体系崩溃。',
+    s2_ci3_h5: '情绪内射调节', s2_ci3_p: '将外界要求内化为自我苛责。努力的本质是\u201c为认可而自我剥削\u201d，持续压抑真实情绪。',
+    s2_ci4_h5: '关系浅层化', s2_ci4_p: '自我与抚养者的心理融合未分化，难以建立真正独立、亲密的成人关系。',
+    s2_ci5_h5: '延迟但更剧烈的危机', s2_ci5_p: 'Marcia 指出，foreclosure 者遭遇失衡时，后果比其他状态更具破坏性 - 因为从未学过如何重建。',
+    s2_mfg_h3: '中国社会如何批量制造 foreclosure',
+    s2_mfg_t0: '高考选专业', s2_mfg_d0: '17 岁凭想象决定终身方向',
+    s2_mfg_t1: '社会节奏刚性', s2_mfg_d1: '升学-入职-结婚-生子，节点严丝合缝',
+    s2_mfg_t2: '偏离惩罚', s2_mfg_d2: '35 岁考公限制、空窗期歧视、同辈压力',
+    s2_mfg_t3: '内射调节', s2_mfg_d3: '将外界要求内化为自我苛责，\u201c为认可而自我剥削\u201d',
+    s2_case_h3: '视频中的两个案例',
+    s2_case_p0: '<strong>朋友</strong> - 停职数年，每日 2 小时处理业务，生活松弛。作者看到后不是羡慕，而是强烈自我怀疑：原来自己习以为常的紧绷和内耗并非唯一答案。',
+    s2_case_p1: '<strong>饺子导演</strong> - 华西医科大毕业后蛰伏 3 年 8 个月，自学 3D 动画，拒绝了\u201c医生\u201d身份的过早绑定。如果屈服于社会脚本，不会有《哪吒》。',
+    s3_cd_h3: 'Gap Year 不是休假，是 moratorium 的入口',
+    s3_cd_p: '心理学意义上，Gap Year 的价值不在于\u201c休息\u201d，而在于它创造了 Marcia 所说的<strong>moratorium（延缓探索期）</strong>的条件：脱离既有轨道，获得心理空间，主动探索\u201c我是谁\u201d和\u201c我要什么\u201d。',
+    s3_west_h4: '西方', s3_west_p: 'Gap Year 被视为\u201c探索期\u201d，企业甚至提供带薪休假。大学录取可 defer。社会容忍试错。',
+    s3_cn_h4: '中国', s3_cn_p: 'Gap = 职场\u201c案底\u201d。应届身份不可恢复。中国式 gap year 被异化为\u201c备考年\u201d或\u201c内卷年\u201d。',
+    s3_fear_h3: 'Gap Year 为什么令人恐惧',
+    s3_fear_p1: '视频的核心洞察：年轻人不敢 gap 的根本原因<strong>不是怕没钱</strong>，而是怕在彻底松绑后被迫直面一个无法回避的终极问题 - \u201c我的生活，真的有意义吗？\u201d',
+    s3_fear_p2: '一旦切断高强度约束环境，获得大把复盘时间，极大概率会得出一个令人崩溃的结论 - 过去几十年拼尽全力的活法，从头到尾全错了。',
+    s3_fear_sub: '但视频指出：这种崩溃恰恰是旧认知地基坍塌的信号。唯一的出路，是亲手重建一个忠于内在的真实自我。',
+    s3_flow_f: 'Foreclosure', s3_flow_c: 'Gap 崩溃期', s3_flow_m: 'Moratorium', s3_flow_a: 'Achievement',
+    s4_cd_h3: '从 foreclosure 走向 achievement 的路径',
+    s4_cd_p: '不一定需要完整的 gap year。关键是创造\u201c心理上的 moratorium\u201d - 在结构化生活中嵌入自我探索的空间。',
+    s4_dims_h3: '自我探索的三个维度',
+    s4_t0: '职业/学术', s4_d0: '尝试不同领域，而非只走\u201c安全路线\u201d。实习、side project、跨学科课程。',
+    s4_t1: '价值观/信念', s4_d1: '审视哪些是自己的，哪些是父母和社会灌输的。写日记，与不同背景的人深度交流。',
+    s4_t2: '关系/角色', s4_d2: '探索\u201c我想成为什么样的人\u201d，而不是\u201c别人期待我成为什么人\u201d。',
+    s4_ex_h3: '一些具体练习',
+    s4_ex_p0: '<strong>价值观排序</strong> - 列出 20 个你认为重要的价值（自由、安全、创造力、金钱、家庭...），排出真正的优先级，区分\u201c我的\u201d和\u201c被灌输的\u201d。',
+    s4_ex_p1: '<strong>\u201c如果没人知道\u201d测试</strong> - 如果没有任何社会评价，你明天会做什么？这个答案和你现在的生活差距有多大？',
+    s4_ex_p2: '<strong>角色剥离</strong> - 剥离职级、公司、社会标签后，\u201c你\u201d究竟是谁？（视频原话）',
+    s4_ex_p3: '<strong>小型实验</strong> - 不需要 gap year，用一个周末/假期去体验一种完全不同的生活方式。',
+    footer_p0: '基于小红书视频\u201cGap Year不是休假，是人生系统的强制重启\u201d整理',
+    footer_p1: '心理学理论来源：Erik Erikson (1968), James Marcia (1966)',
+    footer_p2: '中国数据来源：国家统计局、前程无忧、澎湃新闻',
+    dts: [
+      '<strong>身份扩散 (Diffusion)</strong> - 既没有探索，也没有承诺。对\u201c我是谁\u201d没有兴趣或感到迷茫。研究表明与抑郁、低自尊关联最强。在中国语境中，可能表现为\u201c摆烂\u201d或\u201c佛系\u201d。',
+      '<strong>同一性过早定型 (Foreclosure)</strong> - 没有探索就直接做出了承诺。典型例子：父亲做什么，儿子也做什么，从未思考过。表面很\u201c稳\u201d，但内心僵化、封闭、依赖权威。中国高考选专业就是典型案例。<em>这是视频讨论的核心状态。</em>',
+      '<strong>延缓/探索期 (Moratorium)</strong> - 正在积极探索，尚未做出承诺。这个阶段焦虑最高，但也是通向 achievement 的必经之路。Gap Year 本质上就是创造这个阶段的条件。Marcia 认为这是最有发展潜力的状态。',
+      '<strong>身份达成 (Achievement)</strong> - 经历了充分探索后做出的承诺。内在驱动、灵活思考、成熟的人际关系。研究显示与最高水平的心理健康和生活满意度相关。大多数人要到成年早期甚至更晚才能达到。'
+    ]
+  },
+  en: {
+    pageTitle: 'Identity Foreclosure — Gap Year & Self-Exploration',
+    metaDesc: "Using Marcia's identity theory to understand China's social clock, identity foreclosure, and the psychological significance of Gap Year",
+    langBtn: '中文',
+    header_h1: 'Identity Foreclosure & Gap Year',
+    header_p: "Using Marcia's identity theory to understand how China's social clock systematically eliminates self-exploration — and why Gap Year matters psychologically",
+    audio_title: 'AI Deep-Dive Audio',
+    audio_sub: 'Generated by NotebookLM — 18 minutes',
+    audio_fallback: 'Your browser does not support audio playback.',
+    nav_0: "Marcia's Identity Theory", nav_1: "China's Social Clock", nav_2: 'Foreclosure & Consequences', nav_3: 'Gap Year Significance', nav_4: 'How to Self-Explore',
+    s0_cd_h3: 'Erikson → Marcia: Psychological Foundations of Identity',
+    s0_cd_p: "Erik Erikson saw the core task of adolescence as forming an 'identity' — answering \"who am I.\" James Marcia built on this with four identity statuses, defined by two dimensions: <strong>Exploration</strong> (actively trying different possibilities) and <strong>Commitment</strong> (making and internalising a choice).",
+    s0_hint: 'Click a card below for details:',
+    s0_d0_h: 'Identity Diffusion', s0_d0_p: 'Low exploration + Low commitment',
+    s0_d1_h: 'Identity Foreclosure', s0_d1_p: 'Low exploration + High commitment',
+    s0_d2_h: 'Moratorium', s0_d2_p: 'High exploration + Low commitment',
+    s0_d3_h: 'Identity Achievement', s0_d3_p: 'High exploration + High commitment',
+    s0_flow_d: 'Diffusion', s0_flow_m: 'Moratorium', s0_flow_a: 'Achievement',
+    s0_flow_sub: 'Healthy development path: exploration → commitment',
+    s1_cd_h3: "China's Social Clock: A Locked-In Life Track",
+    s1_cd_p: 'Chinese society has a "standard answer" for every age milestone. Deviating means social pressure and loss of resources — the cost of trial and error is prohibitively high.',
+    s1_ev0_age: 'Ages 3–18', s1_ev0_ds: 'Kindergarten → Primary → Middle → High school. ~40% eliminated at the zhongkao, gaokao as the single bottleneck. No breathing room.',
+    s1_ev1_age: 'Age 18', s1_ev1_ds: 'Gaokao major selection — without real-world exposure, forced to bet on a lifelong path based on imagination. <span class="tg tg-r">Critical Decision Point</span>',
+    s1_ev2_age: 'Ages 22–24', s1_ev2_ds: 'Fresh-graduate status = "golden halo." Gap once and it vanishes, leaving a permanent mark on your résumé. <span class="tg tg-a">Graduate Window</span>',
+    s1_ev3_age: 'Ages 25–30', s1_ev3_ds: 'Employment, promotions, pressure to marry and have children. The "settled by 30" deadline.',
+    s1_ev4_age: 'Age 35', s1_ev4_ds: 'Civil-service exam age cap. 70% of promotions stall before 35. 80% of job postings require "under 35." <span class="tg tg-r">35-Year Ceiling</span>',
+    s1_stat0_l: 'Youth unemployment rate, ages 16–24 (Mar 2025)', s1_stat1_l: 'Who lost job opportunities due to employment gaps',
+    s1_core_h3: 'Core Contradiction',
+    s1_core_p: "Society champions \"diverse life paths\" while judging by \"continuous employment.\" Universities encourage \"self-exploration\"; employers demand \"stable output.\" The moratorium period that Marcia's theory requires is systematically cancelled by China's social clock.",
+    s2_main_h3: 'Identity Foreclosure',
+    s2_main_p: "The video's core concept. The individual, <strong>without exploration</strong>, directly adopts the identity and values assigned by parents and society. Outwardly goal-driven and committed — yet has never truly asked \"what do I actually want.\"",
+    s2_sur_h4: 'How It Looks', s2_sur_p: 'Clear goals, hard-working, emotionally stable, socially approved',
+    s2_inn_h4: 'Inner Reality', s2_inn_p: 'Lack of autonomy, rigid thinking, authority dependency, high anxiety toward uncertainty',
+    s2_cons_h3: 'Consequences of Foreclosure',
+    s2_cons_p: 'Research shows foreclosure is not "stability without issues" but a fragile pseudo-stability. When external circumstances change, the entire life narrative can collapse instantly.',
+    s2_ci0_h5: 'Psychological Rigidity', s2_ci0_p: 'Highly authoritarian, difficulty accepting differing views. Strongly defensive toward new information; refuses to revisit existing beliefs.',
+    s2_ci1_h5: 'Mid-life Meaning Crisis', s2_ci1_p: 'At 25–35, suddenly realising you\'ve been living by someone else\'s script. High performance, inner emptiness — "competence ≠ meaning."',
+    s2_ci2_h5: 'Fragile Self-Esteem', s2_ci2_p: 'Outwardly high self-esteem, entirely dependent on external validation. Once status or identity labels are stripped, the self-worth structure collapses.',
+    s2_ci3_h5: 'Introjected Regulation', s2_ci3_p: 'Externalised demands become internal self-criticism. The drive to work is "self-exploitation for approval," while genuine emotions are perpetually suppressed.',
+    s2_ci4_h5: 'Shallow Relationships', s2_ci4_p: 'Psychological fusion with primary caregivers remains undifferentiated; unable to form truly independent and intimate adult bonds.',
+    s2_ci5_h5: 'Delayed but More Violent Crisis', s2_ci5_p: "Marcia noted that when foreclosed individuals are destabilised, the fallout is more destructive than in other statuses — because they never learned how to rebuild.",
+    s2_mfg_h3: 'How China Mass-Produces Foreclosure',
+    s2_mfg_t0: 'Gaokao major choice', s2_mfg_d0: 'Deciding a lifelong path at 17 based on imagination',
+    s2_mfg_t1: 'Rigid social timeline', s2_mfg_d1: 'Education → employment → marriage → children, each node airtight',
+    s2_mfg_t2: 'Deviation penalties', s2_mfg_d2: 'Age-35 civil-service cap, employment-gap bias, peer pressure',
+    s2_mfg_t3: 'Introjected regulation', s2_mfg_d3: '"Self-exploitation for approval" internalised as self-criticism',
+    s2_case_h3: 'Two Cases from the Video',
+    s2_case_p0: "<strong>The Friend</strong> — Off work for years, handling 2 hours of tasks per day, living at ease. The author's reaction was not envy but intense self-doubt: realising the chronic tension and inner conflict he'd normalised was not the only option.",
+    s2_case_p1: "<strong>Director Jiaozi</strong> — After graduating from West China Medical University, spent 3 years 8 months in obscurity, self-taught 3D animation, refused to be bound by the 'doctor' identity. Without resisting the social script, there would be no <em>Nezha</em>.",
+    s3_cd_h3: 'Gap Year Is Not a Vacation — It\'s an Entry to Moratorium',
+    s3_cd_p: 'Psychologically, the value of a Gap Year is not "rest" but creating conditions for what Marcia called the <strong>moratorium</strong>: stepping off the existing track, gaining mental space, and actively exploring "who am I" and "what do I want."',
+    s3_west_h4: 'West', s3_west_p: 'Gap Year is seen as an "exploration period"; companies even offer paid sabbaticals. Universities allow deferral of enrollment. Society tolerates trial and error.',
+    s3_cn_h4: 'China', s3_cn_p: 'Gap = a career "stain." Fresh-graduate status, once lost, cannot be recovered. The Chinese Gap Year has been distorted into a "revision year" or yet another year of grinding.',
+    s3_fear_h3: 'Why Gap Year Is Terrifying',
+    s3_fear_p1: "The video's core insight: young people's reluctance to gap is fundamentally <strong>not about money</strong>, but about being forced, after complete detachment, to confront an unavoidable question — \"Does my life actually have meaning?\"",
+    s3_fear_p2: "Once the high-pressure structure is cut away and reflective time floods in, there is a very real chance of reaching a devastating conclusion — that the all-out way of living for the past few decades was wrong from the very beginning.",
+    s3_fear_sub: 'But the video notes: this very collapse is the signal that the old cognitive foundation is crumbling. The only way forward is to personally rebuild an authentic self.',
+    s3_flow_f: 'Foreclosure', s3_flow_c: 'Gap Crisis', s3_flow_m: 'Moratorium', s3_flow_a: 'Achievement',
+    s4_cd_h3: 'The Path from Foreclosure to Achievement',
+    s4_cd_p: "A full gap year isn't required. The key is to create \"psychological moratorium\" — carving space for self-exploration within a structured life.",
+    s4_dims_h3: 'Three Dimensions of Self-Exploration',
+    s4_t0: 'Career / Academic', s4_d0: 'Try different fields rather than only walking the "safe path." Internships, side projects, cross-disciplinary courses.',
+    s4_t1: 'Values / Beliefs', s4_d1: 'Examine which are truly yours and which were instilled by parents and society. Keep a journal, have deep conversations with people from different backgrounds.',
+    s4_t2: 'Relationships / Roles', s4_d2: 'Explore "what kind of person do I want to be," not "what does society expect of me."',
+    s4_ex_h3: 'Some Practical Exercises',
+    s4_ex_p0: "<strong>Value Ranking</strong> — List 20 values you consider important (freedom, security, creativity, money, family…), rank by true priority, and distinguish 'mine' from 'instilled in me.'",
+    s4_ex_p1: "<strong>'If No One Knew' Test</strong> — If there were zero social judgment, what would you do tomorrow? How wide is the gap between that answer and your current life?",
+    s4_ex_p2: "<strong>Role Stripping</strong> — Strip away your job title, company, and social labels. Who are 'you,' really? (Direct quote from the video.)",
+    s4_ex_p3: '<strong>Small Experiments</strong> — No gap year required. Use a weekend or holiday to experience a completely different way of living.',
+    footer_p0: 'Based on the Xiaohongshu video "Gap Year Is Not a Vacation — It\'s a Forced Reboot of Your Life System"',
+    footer_p1: 'Psychology theory sources: Erik Erikson (1968), James Marcia (1966)',
+    footer_p2: 'China data sources: National Bureau of Statistics, 51job, The Paper',
+    dts: [
+      '<strong>Identity Diffusion</strong> — Neither exploration nor commitment. No interest in or clarity about "who am I." Research shows the strongest links to depression and low self-esteem. In a Chinese context, may appear as "lying flat" (躺平) or "Buddhist" detachment.',
+      '<strong>Identity Foreclosure</strong> — Commitment made without exploration. Classic example: son does what father does, never questioned it. Outwardly "stable," inwardly rigid, closed, and authority-dependent. Gaokao major selection is the archetypal Chinese case. <em>This is the central state the video discusses.</em>',
+      '<strong>Moratorium</strong> — Actively exploring, yet to commit. This stage carries the highest anxiety, but it is the necessary path toward achievement. A Gap Year is essentially about creating the conditions for this stage. Marcia considered it the most developmentally potent state.',
+      "<strong>Identity Achievement</strong> — Commitment made after sufficient exploration. Internally driven, flexible thinking, mature relationships. Research links it to the highest levels of psychological well-being and life satisfaction. Most people don't reach this until early adulthood or later."
+    ]
+  }
+};
+
+function applyLang(l) {
+  lang = l;
+  var d = T[l];
+  document.title = d.pageTitle;
+  var meta = document.querySelector('meta[name="description"]');
+  if (meta) { meta.setAttribute('content', d.metaDesc); }
+  document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('langBtn').textContent = d.langBtn;
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (d[key] !== undefined) { el.innerHTML = d[key]; }
+  });
+  document.querySelectorAll('.det-inline').forEach(function(el) {
+    el.classList.remove('open');
+    el.innerHTML = '';
+  });
+  try { localStorage.setItem('lang', l); } catch(e) {}
+}
+
+function toggleLang() {
+  applyLang(lang === 'zh' ? 'en' : 'zh');
+}
+
+function show(i) {
+  document.querySelectorAll('.pnl').forEach(function(p) { p.classList.remove('on'); });
+  document.querySelectorAll('.nav button').forEach(function(b) { b.classList.remove('on'); });
+  document.getElementById('p' + i).classList.add('on');
   document.querySelectorAll('.nav button')[i].classList.add('on');
 }
-function showD(i,el){
-  document.querySelectorAll('.det-inline').forEach(function(d){d.classList.remove('open');d.innerHTML='';});
-  var target=document.getElementById('det'+i);
-  target.innerHTML=dts[i];
+
+function showD(i, el) {
+  document.querySelectorAll('.det-inline').forEach(function(d) { d.classList.remove('open'); d.innerHTML = ''; });
+  var target = document.getElementById('det' + i);
+  target.innerHTML = T[lang].dts[i];
   target.classList.add('open');
-  target.scrollIntoView({behavior:'smooth',block:'nearest'});
+  target.scrollIntoView({behavior: 'smooth', block: 'nearest'});
 }
+
+(function() {
+  var saved = null;
+  try { saved = localStorage.getItem('lang'); } catch(e) {}
+  var deviceLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+  var initial = saved || (deviceLang.startsWith('zh') ? 'zh' : 'en');
+  applyLang(initial);
+})();
 </script>
 </body>
 </html>
