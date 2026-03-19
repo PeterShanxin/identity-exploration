@@ -330,7 +330,7 @@ footer {
 </style>
 </head>
 <body>
-<button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+<button type="button" class="lang-btn" id="langBtn" onclick="toggleLang()" aria-label="Switch language">EN</button>
 <div class="wrap">
 
 <header>
@@ -654,20 +654,25 @@ var T = {
 };
 
 function applyLang(l) {
+  if (l !== 'zh' && l !== 'en') { l = 'en'; }
   lang = l;
   var d = T[l];
   document.title = d.pageTitle;
   var meta = document.querySelector('meta[name="description"]');
   if (meta) { meta.setAttribute('content', d.metaDesc); }
   document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
-  document.getElementById('langBtn').textContent = d.langBtn;
+  var langBtnEl = document.getElementById('langBtn');
+  langBtnEl.textContent = d.langBtn;
+  langBtnEl.setAttribute('aria-label', l === 'zh' ? 'Switch language to English' : '切换语言为中文');
   document.querySelectorAll('[data-i18n]').forEach(function(el) {
     var key = el.getAttribute('data-i18n');
     if (d[key] !== undefined) { el.innerHTML = d[key]; }
   });
   document.querySelectorAll('.det-inline').forEach(function(el) {
-    el.classList.remove('open');
-    el.innerHTML = '';
+    if (el.classList.contains('open')) {
+      var idx = parseInt(el.id.replace('det', ''), 10);
+      if (!isNaN(idx) && d.dts[idx]) { el.innerHTML = d.dts[idx]; }
+    }
   });
   try { localStorage.setItem('lang', l); } catch(e) {}
 }
