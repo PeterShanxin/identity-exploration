@@ -228,6 +228,15 @@ header p {
   transition: all 0.3s;
   line-height: 1.7;
 }
+.det-inline {
+  display: none;
+  margin: 0 0 12px;
+  padding: 14px 16px;
+  animation: fadeIn 0.3s ease;
+}
+.det-inline.open {
+  display: block;
+}
 .af {
   display: flex;
   align-items: center;
@@ -241,8 +250,13 @@ header p {
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 500;
+  white-space: nowrap;
 }
 .af .ar { color: var(--text-tertiary); font-size: 1rem; }
+@media (max-width: 420px) {
+  .af .st { padding: 5px 10px; font-size: 0.6875rem; }
+  .af .ar { font-size: 0.875rem; }
+}
 .cg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
 @media (max-width: 520px) { .cg { grid-template-columns: 1fr; } }
 .ci {
@@ -310,7 +324,7 @@ footer {
   </div>
   <div class="audio-meta">
     <p class="audio-title">AI 深度解读音频</p>
-    <p class="audio-sub">NotebookLM 生成 - 23 分钟</p>
+    <p class="audio-sub">NotebookLM 生成 - 18 分钟</p>
   </div>
   <audio controls preload="metadata">
     <source src="audio.ogg" type="audio/ogg">
@@ -333,13 +347,14 @@ footer {
     <p>Erik Erikson 认为青少年期的核心任务是建立"同一性"(identity) - 即回答"我是谁"。James Marcia 在此基础上提出四种身份状态，由两个维度决定：<strong>探索</strong>（是否主动尝试不同可能性）和<strong>承诺</strong>（是否做出选择并认同）。</p>
   </div>
   <p style="font-size:0.8125rem;color:var(--text-secondary);margin:0 0 8px">点击下方卡片查看详情：</p>
-  <div class="sg">
-    <div class="sb sb-d" onclick="showD(0)"><h4>身份扩散 Diffusion</h4><p>低探索 + 低承诺</p></div>
-    <div class="sb sb-f" onclick="showD(1)"><h4>同一性过早定型 Foreclosure</h4><p>低探索 + 高承诺</p></div>
-    <div class="sb sb-m" onclick="showD(2)"><h4>延缓/探索期 Moratorium</h4><p>高探索 + 低承诺</p></div>
-    <div class="sb sb-a" onclick="showD(3)"><h4>身份达成 Achievement</h4><p>高探索 + 高承诺</p></div>
-  </div>
-  <div class="db" id="det">点击上方任一状态查看解读</div>
+  <div class="sb sb-d" onclick="showD(0,this)" style="margin:0 0 8px"><h4>身份扩散 Diffusion</h4><p>低探索 + 低承诺</p></div>
+  <div class="db det-inline" id="det0"></div>
+  <div class="sb sb-f" onclick="showD(1,this)" style="margin:0 0 8px"><h4>同一性过早定型 Foreclosure</h4><p>低探索 + 高承诺</p></div>
+  <div class="db det-inline" id="det1"></div>
+  <div class="sb sb-m" onclick="showD(2,this)" style="margin:0 0 8px"><h4>延缓/探索期 Moratorium</h4><p>高探索 + 低承诺</p></div>
+  <div class="db det-inline" id="det2"></div>
+  <div class="sb sb-a" onclick="showD(3,this)" style="margin:0 0 8px"><h4>身份达成 Achievement</h4><p>高探索 + 高承诺</p></div>
+  <div class="db det-inline" id="det3"></div>
   <div class="af">
     <span class="st" style="background:#FCEBEB;color:#791F1F">扩散</span><span class="ar">→</span>
     <span class="st" style="background:#E6F1FB;color:#0C447C">延缓期</span><span class="ar">→</span>
@@ -466,7 +481,13 @@ function show(i){
   document.getElementById('p'+i).classList.add('on');
   document.querySelectorAll('.nav button')[i].classList.add('on');
 }
-function showD(i){document.getElementById('det').innerHTML=dts[i]}
+function showD(i,el){
+  document.querySelectorAll('.det-inline').forEach(function(d){d.classList.remove('open');d.innerHTML='';});
+  var target=document.getElementById('det'+i);
+  target.innerHTML=dts[i];
+  target.classList.add('open');
+  target.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
 </script>
 </body>
 </html>
