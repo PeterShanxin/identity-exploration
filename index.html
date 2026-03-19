@@ -54,7 +54,7 @@
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { font-size: 16px; -webkit-font-smoothing: antialiased; }
-h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); letter-spacing: 0.015em; }
 body {
   font-family: var(--font-body);
   background: var(--bg-page);
@@ -71,7 +71,19 @@ header {
   text-align: center;
   margin: 0 0 2.5rem;
   padding: 2rem 0 1.5rem;
-  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-info), transparent);
+  opacity: 0.7;
 }
 header h1 {
   font-family: var(--font-display);
@@ -110,6 +122,8 @@ header p {
   white-space: nowrap;
 }
 .nav button:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.nav button:focus-visible { outline: 2px solid var(--border-info); outline-offset: 2px; }
+.nav button:active { transform: scale(0.97); }
 .nav button.on {
   background: var(--bg-info);
   color: var(--text-info);
@@ -124,7 +138,9 @@ header p {
   border-radius: var(--radius-lg);
   padding: 1.25rem 1.5rem;
   margin: 0 0 14px;
+  transition: border-color 0.2s ease;
 }
+.cd:hover { border-color: var(--border-hover); }
 .cd h3 {
   font-size: 1.05rem;
   font-weight: 500;
@@ -303,9 +319,76 @@ footer {
 .audio-meta .audio-title { font-size: 0.8125rem; font-weight: 500; margin: 0 0 2px; }
 .audio-meta .audio-sub { font-size: 0.6875rem; color: var(--text-tertiary); margin: 0; }
 .audio-block audio { width: 100%; max-width: 320px; height: 36px; flex-shrink: 0; }
+.js-audio-ready .audio-block audio { display: none; }
+.audio-controls { display: none; }
+.js-audio-ready .audio-controls { display: flex; }
+.audio-controls {
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  max-width: 320px;
+}
+.audio-play-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s;
+  color: var(--text-info);
+}
+.audio-play-btn:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-info);
+}
+.audio-play-btn:focus-visible {
+  outline: 2px solid var(--border-info);
+  outline-offset: 2px;
+}
+.audio-play-btn svg { width: 14px; height: 14px; }
+.audio-progress-wrap {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-surface);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.audio-progress-bar {
+  height: 100%;
+  background: var(--border-info);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+.audio-time {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  white-space: nowrap;
+  min-width: 32px;
+  text-align: right;
+}
 @media (max-width: 520px) {
   .audio-block { flex-wrap: wrap; }
-  .audio-block audio { max-width: 100%; }
+  .audio-controls { max-width: 100%; }
+}
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--border-info);
+  width: 0%;
+  z-index: 100;
+  pointer-events: none;
 }
 .lang-btn {
   position: fixed;
@@ -331,6 +414,7 @@ footer {
 </style>
 </head>
 <body>
+<div class="scroll-progress" id="scrollProgress"></div>
 <button type="button" class="lang-btn" id="langBtn" onclick="toggleLang()" aria-label="Switch language">EN</button>
 <div class="wrap">
 
@@ -348,6 +432,15 @@ footer {
   <div class="audio-meta">
     <p class="audio-title" data-i18n="audio_title">AI 深度解读音频</p>
     <p class="audio-sub" data-i18n="audio_sub">NotebookLM 生成</p>
+  </div>
+  <div class="audio-controls">
+    <button type="button" class="audio-play-btn" id="audioPlayBtn" aria-label="Play" onclick="toggleAudio()">
+      <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,4 20,12 6,20"/></svg>
+    </button>
+    <div class="audio-progress-wrap" id="audioProgressWrap" role="slider" tabindex="0" aria-label="Audio progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekAudio(event)" onkeydown="seekAudioKey(event)">
+      <div class="audio-progress-bar" id="audioProgressBar"></div>
+    </div>
+    <span class="audio-time" id="audioTime">0:00</span>
   </div>
   <audio id="audioPlayer" controls preload="metadata">
     <source id="audioSrcOgg" src="audio.ogg" type="audio/ogg">
@@ -694,6 +787,8 @@ function show(i) {
   document.querySelectorAll('.nav button').forEach(function(b) { b.classList.remove('on'); });
   document.getElementById('p' + i).classList.add('on');
   document.querySelectorAll('.nav button')[i].classList.add('on');
+  var motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelector('.nav').scrollIntoView({ behavior: motionOk ? 'smooth' : 'auto', block: 'start' });
 }
 
 function showD(i, el) {
@@ -704,7 +799,91 @@ function showD(i, el) {
   target.scrollIntoView({behavior: 'smooth', block: 'nearest'});
 }
 
+function toggleAudio() {
+  var a = document.getElementById('audioPlayer');
+  if (a.paused) {
+    a.play().catch(function() { /* ignore autoplay/source errors */ });
+  } else {
+    a.pause();
+  }
+}
+
+function seekAudio(e) {
+  var a = document.getElementById('audioPlayer');
+  var wrap = document.getElementById('audioProgressWrap');
+  var rect = wrap.getBoundingClientRect();
+  if (rect.width === 0) return;
+  var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  if (a.duration) { a.currentTime = pct * a.duration; }
+}
+
+function seekAudioKey(e) {
+  var a = document.getElementById('audioPlayer');
+  if (!a.duration) return;
+  var step = 5;
+  if (e.key === 'ArrowRight') { a.currentTime = Math.min(a.duration, a.currentTime + step); }
+  else if (e.key === 'ArrowLeft') { a.currentTime = Math.max(0, a.currentTime - step); }
+  else if (e.key === 'Home') { a.currentTime = 0; }
+  else if (e.key === 'End') { a.currentTime = a.duration; }
+  else { return; }
+  e.preventDefault();
+}
+
+function formatTime(s) {
+  if (isNaN(s)) return '0:00';
+  var m = Math.floor(s / 60);
+  var sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
 (function() {
+  var a = document.getElementById('audioPlayer');
+  var icon = document.getElementById('audioPlayIcon');
+  var btn = document.getElementById('audioPlayBtn');
+  var bar = document.getElementById('audioProgressBar');
+  var timeEl = document.getElementById('audioTime');
+
+  function setPlayIcon(playing) {
+    if (playing) {
+      icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+      btn.setAttribute('aria-label', 'Pause');
+    } else {
+      icon.innerHTML = '<polygon points="6,4 20,12 6,20"/>';
+      btn.setAttribute('aria-label', 'Play');
+    }
+  }
+
+  document.documentElement.classList.add('js-audio-ready');
+
+  function resetAudioUI() {
+    setPlayIcon(false);
+    bar.style.width = '0%';
+    timeEl.textContent = '0:00';
+    var wrap = document.getElementById('audioProgressWrap');
+    if (wrap) wrap.setAttribute('aria-valuenow', '0');
+  }
+
+  a.addEventListener('play', function() { setPlayIcon(true); });
+  a.addEventListener('pause', function() { setPlayIcon(false); });
+  a.addEventListener('ended', function() { setPlayIcon(false); });
+  a.addEventListener('emptied', resetAudioUI);
+  a.addEventListener('loadstart', resetAudioUI);
+  a.addEventListener('timeupdate', function() {
+    var pct = a.duration ? (a.currentTime / a.duration * 100) : 0;
+    bar.style.width = pct + '%';
+    timeEl.textContent = formatTime(a.currentTime);
+    var wrap = document.getElementById('audioProgressWrap');
+    if (wrap) wrap.setAttribute('aria-valuenow', Math.round(pct).toString());
+  });
+
+  var scrollEl = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', function() {
+    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight * 100) : 0;
+    scrollEl.style.width = pct + '%';
+  }, { passive: true });
+
   var saved = null;
   try { saved = localStorage.getItem('lang'); } catch(e) {}
   var deviceLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
