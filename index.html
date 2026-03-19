@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>同一性过早定型 - Gap Year 与自我探索</title>
+<meta name="description" content="从 Marcia 身份理论理解中国社会时钟、同一性过早定型与 Gap Year 的心理学意义">
+<link rel="preconnect" href="https://fonts.googleapis.cn">
+<link href="https://fonts.googleapis.cn/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-page: #FAFAF8;
+  --bg-card: #FFFFFF;
+  --bg-surface: #F4F3F0;
+  --bg-info: #E6F1FB;
+  --bg-danger: #FCEBEB;
+  --bg-success: #EAF3DE;
+  --bg-warning: #FAEEDA;
+  --text-primary: #1A1A19;
+  --text-secondary: #6B6A65;
+  --text-tertiary: #9C9A92;
+  --text-info: #0C447C;
+  --text-danger: #791F1F;
+  --text-success: #27500A;
+  --text-warning: #633806;
+  --border: rgba(0,0,0,0.1);
+  --border-hover: rgba(0,0,0,0.2);
+  --border-info: #85B7EB;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --font-body: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-display: 'Noto Serif SC', 'Songti SC', serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-page: #1C1C1A;
+    --bg-card: #2A2A27;
+    --bg-surface: #333330;
+    --bg-info: #0C447C;
+    --bg-danger: #501313;
+    --bg-success: #173404;
+    --bg-warning: #412402;
+    --text-primary: #E8E6DE;
+    --text-secondary: #A8A69E;
+    --text-tertiary: #73726C;
+    --text-info: #85B7EB;
+    --text-danger: #F09595;
+    --text-success: #97C459;
+    --text-warning: #FAC775;
+    --border: rgba(255,255,255,0.1);
+    --border-hover: rgba(255,255,255,0.2);
+    --border-info: #378ADD;
+  }
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.75;
+  min-height: 100vh;
+}
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+header {
+  text-align: center;
+  margin: 0 0 2.5rem;
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+header h1 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem;
+}
+header p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto;
+}
+.nav {
+  display: flex;
+  gap: 6px;
+  margin: 0 0 1.75rem;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-page);
+  padding: 0.75rem 0;
+}
+.nav button {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+.nav button:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.nav button.on {
+  background: var(--bg-info);
+  color: var(--text-info);
+  border-color: var(--border-info);
+}
+.pnl { display: none; animation: fadeIn 0.3s ease; }
+.pnl.on { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.cd {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 0 0 14px;
+}
+.cd h3 {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+}
+.cd p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.4rem;
+}
+.tg {
+  display: inline-block;
+  font-size: 0.6875rem;
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin: 2px 4px 2px 0;
+  font-weight: 500;
+}
+.tg-r { background: #FCEBEB; color: #791F1F; }
+.tg-b { background: #E6F1FB; color: #0C447C; }
+.tg-g { background: #EAF3DE; color: #27500A; }
+.tg-a { background: #FAEEDA; color: #633806; }
+.tg-p { background: #EEEDFE; color: #3C3489; }
+@media (prefers-color-scheme: dark) {
+  .tg-r { background: #501313; color: #F09595; }
+  .tg-b { background: #042C53; color: #85B7EB; }
+  .tg-g { background: #173404; color: #97C459; }
+  .tg-a { background: #412402; color: #FAC775; }
+  .tg-p { background: #26215C; color: #AFA9EC; }
+}
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .g2 { grid-template-columns: 1fr; } }
+.mt {
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+.mt .n { font-size: 1.5rem; font-weight: 500; }
+.mt .l { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
+.tl { position: relative; padding-left: 20px; margin: 16px 0; }
+.tl .ev {
+  padding: 0 0 18px;
+  position: relative;
+  border-left: 2px solid var(--border);
+  padding-left: 18px;
+}
+.tl .ev:last-child { border-left-color: transparent; }
+.tl .dt {
+  position: absolute;
+  left: -7px;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg-info);
+  border: 2px solid var(--border-info);
+}
+.tl .ag { font-size: 0.8125rem; font-weight: 500; color: var(--text-info); }
+.tl .ds { font-size: 0.8125rem; color: var(--text-secondary); }
+.cr { display: flex; gap: 12px; margin: 10px 0; }
+@media (max-width: 520px) { .cr { flex-direction: column; } }
+.cr .c {
+  flex: 1;
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.cr .c h4 { font-size: 0.875rem; font-weight: 500; margin: 0 0 6px; }
+.cr .c p { font-size: 0.8125rem; color: var(--text-secondary); margin: 0; }
+.sg { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 520px) { .sg { grid-template-columns: 1fr; } }
+.sb {
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.25rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  border: 1px solid transparent;
+}
+.sb:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.sb h4 { font-size: 0.9rem; font-weight: 500; margin: 0 0 4px; }
+.sb p { font-size: 0.75rem; margin: 0; }
+.sb-d { background: #FCEBEB; } .sb-d h4 { color: #791F1F; } .sb-d p { color: #A32D2D; }
+.sb-f { background: #FAEEDA; } .sb-f h4 { color: #633806; } .sb-f p { color: #854F0B; }
+.sb-m { background: #E6F1FB; } .sb-m h4 { color: #0C447C; } .sb-m p { color: #185FA5; }
+.sb-a { background: #EAF3DE; } .sb-a h4 { color: #27500A; } .sb-a p { color: #3B6D11; }
+@media (prefers-color-scheme: dark) {
+  .sb-d { background: #3D1818; } .sb-d h4 { color: #F09595; } .sb-d p { color: #F7C1C1; }
+  .sb-f { background: #3A2A0A; } .sb-f h4 { color: #FAC775; } .sb-f p { color: #FAEEDA; }
+  .sb-m { background: #0A2E4A; } .sb-m h4 { color: #85B7EB; } .sb-m p { color: #B5D4F4; }
+  .sb-a { background: #1A2E0A; } .sb-a h4 { color: #97C459; } .sb-a p { color: #C0DD97; }
+  .sb:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+}
+.db {
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin: 14px 0;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  min-height: 56px;
+  transition: all 0.3s;
+  line-height: 1.7;
+}
+.af {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.af .st {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.af .ar { color: var(--text-tertiary); font-size: 1rem; }
+.cg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+@media (max-width: 520px) { .cg { grid-template-columns: 1fr; } }
+.ci {
+  background: var(--bg-surface);
+  padding: 12px 14px;
+  border-left: 3px solid;
+  border-radius: 0;
+}
+.ci h5 { font-size: 0.8125rem; font-weight: 500; margin: 0 0 4px; }
+.ci p { font-size: 0.75rem; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+.sub { font-size: 0.75rem; color: var(--text-tertiary); text-align: center; margin: 6px 0; }
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  line-height: 1.6;
+}
+.audio-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  margin: 0 0 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.audio-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-info);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.audio-icon svg { width: 18px; height: 18px; }
+.audio-meta { flex: 1; min-width: 0; }
+.audio-meta .audio-title { font-size: 0.8125rem; font-weight: 500; margin: 0 0 2px; }
+.audio-meta .audio-sub { font-size: 0.6875rem; color: var(--text-tertiary); margin: 0; }
+.audio-block audio { width: 100%; max-width: 320px; height: 36px; flex-shrink: 0; }
+@media (max-width: 520px) {
+  .audio-block { flex-wrap: wrap; }
+  .audio-block audio { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>同一性过早定型与 Gap Year</h1>
+  <p>从 Marcia 身份理论出发，理解中国社会时钟如何系统性取消自我探索，以及 Gap Year 的心理学意义</p>
+</header>
+
+<div class="audio-block">
+  <div class="audio-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-info)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
+    </svg>
+  </div>
+  <div class="audio-meta">
+    <p class="audio-title">AI 深度解读音频</p>
+    <p class="audio-sub">NotebookLM 生成 - 23 分钟</p>
+  </div>
+  <audio controls preload="metadata">
+    <source src="audio.ogg" type="audio/ogg">
+    <source src="audio.m4a" type="audio/mp4">
+    浏览器不支持音频播放
+  </audio>
+</div>
+
+<div class="nav" id="nav">
+  <button class="on" onclick="show(0)">Marcia 身份理论</button>
+  <button onclick="show(1)">中国社会时钟</button>
+  <button onclick="show(2)">过早定型与后果</button>
+  <button onclick="show(3)">Gap Year 的意义</button>
+  <button onclick="show(4)">如何自我探索</button>
+</div>
+
+<div class="pnl on" id="p0">
+  <div class="cd">
+    <h3>Erikson → Marcia: 身份探索的心理学基础</h3>
+    <p>Erik Erikson 认为青少年期的核心任务是建立"同一性"(identity) - 即回答"我是谁"。James Marcia 在此基础上提出四种身份状态，由两个维度决定：<strong>探索</strong>（是否主动尝试不同可能性）和<strong>承诺</strong>（是否做出选择并认同）。</p>
+  </div>
+  <p style="font-size:0.8125rem;color:var(--text-secondary);margin:0 0 8px">点击下方卡片查看详情：</p>
+  <div class="sg">
+    <div class="sb sb-d" onclick="showD(0)"><h4>身份扩散 Diffusion</h4><p>低探索 + 低承诺</p></div>
+    <div class="sb sb-f" onclick="showD(1)"><h4>同一性过早定型 Foreclosure</h4><p>低探索 + 高承诺</p></div>
+    <div class="sb sb-m" onclick="showD(2)"><h4>延缓/探索期 Moratorium</h4><p>高探索 + 低承诺</p></div>
+    <div class="sb sb-a" onclick="showD(3)"><h4>身份达成 Achievement</h4><p>高探索 + 高承诺</p></div>
+  </div>
+  <div class="db" id="det">点击上方任一状态查看解读</div>
+  <div class="af">
+    <span class="st" style="background:#FCEBEB;color:#791F1F">扩散</span><span class="ar">→</span>
+    <span class="st" style="background:#E6F1FB;color:#0C447C">延缓期</span><span class="ar">→</span>
+    <span class="st" style="background:#EAF3DE;color:#27500A">达成</span>
+  </div>
+  <p class="sub">健康的发展路径：经历探索 → 做出承诺</p>
+</div>
+
+<div class="pnl" id="p1">
+  <div class="cd">
+    <h3>中国社会时钟：环环相扣的人生轨道</h3>
+    <p>中国社会对每个年龄节点都有严格的"标准答案"。偏离即承受舆论压力与资源剥夺，试错成本极高。</p>
+  </div>
+  <div class="tl">
+    <div class="ev"><div class="dt"></div><span class="ag">3-18 岁</span><div class="ds">幼儿园 → 小学 → 初中 → 高中。中考淘汰 40%，高考独木桥。没有喘息空间。</div></div>
+    <div class="ev"><div class="dt"></div><span class="ag">18 岁</span><div class="ds">高考选专业 - 未曾真实接触世界，却要凭想象押注终身方向。<span class="tg tg-r">关键决策点</span></div></div>
+    <div class="ev"><div class="dt"></div><span class="ag">22-24 岁</span><div class="ds">应届生身份 = "黄金光环"。一旦 gap，光环消失，简历留下"案底"。<span class="tg tg-a">应届窗口</span></div></div>
+    <div class="ev"><div class="dt"></div><span class="ag">25-30 岁</span><div class="ds">入职、升迁、催婚、催生。三十而立的 deadline。</div></div>
+    <div class="ev"><div class="dt"></div><span class="ag">35 岁</span><div class="ds">公务员报考年龄上限。七成人晋升停滞在 35 岁前。八成岗位要求 35 岁以下。<span class="tg tg-r">35 岁天花板</span></div></div>
+  </div>
+  <div class="g2">
+    <div class="mt"><div class="n">16.5%</div><div class="l">16-24 岁青年失业率 (2025.3)</div></div>
+    <div class="mt"><div class="n">~40%</div><div class="l">因"空窗期"失去工作机会</div></div>
+  </div>
+  <div class="cd" style="margin-top:14px">
+    <h3>核心矛盾</h3>
+    <p>社会一边倡导"多元人生"，一边用"连续就业"评判价值。高校鼓励"探索自我"，企业要求"稳定产出"。Marcia 理论所需的探索期 (moratorium)，在中国被社会时钟系统性取消了。</p>
+  </div>
+</div>
+
+<div class="pnl" id="p2">
+  <div class="cd" style="border-left:3px solid #BA7517;border-radius:0">
+    <h3>同一性过早定型 (Identity Foreclosure)</h3>
+    <p>视频的核心概念。个体在<strong>未经探索</strong>的情况下直接接受了父母、社会赋予的身份和价值观。表面上有明确目标和承诺，实际上从未真正问过自己"我要什么"。</p>
+  </div>
+  <div class="cr">
+    <div class="c" style="border-top:3px solid #A32D2D;border-radius:0"><h4 style="color:var(--text-danger)">表面看起来</h4><p>目标明确、努力上进、情绪稳定、社会认可度高</p></div>
+    <div class="c" style="border-top:3px solid #185FA5;border-radius:0"><h4 style="color:var(--text-info)">内在真相</h4><p>缺乏自主性、思维僵化、权威依赖、对不确定性高度焦虑</p></div>
+  </div>
+  <div class="cd"><h3>过早定型的后果</h3><p>研究表明，foreclosure 并非"没有问题的稳定"，而是一种脆弱的伪稳定。一旦外部环境发生变化，整个人生叙事可能瞬间崩塌。</p></div>
+  <div class="cg">
+    <div class="ci" style="border-left-color:#A32D2D"><h5>心理僵化与封闭</h5><p>高度权威主义，难以接受不同观点。面对新信息时防御性强，拒绝反思已有信念。</p></div>
+    <div class="ci" style="border-left-color:#A32D2D"><h5>中年意义危机</h5><p>25-35 岁时突然意识到自己活在别人的脚本里。绩效优异却内心空虚疲惫 - "胜任感 ≠ 意义感"。</p></div>
+    <div class="ci" style="border-left-color:#854F0B"><h5>脆弱的自尊</h5><p>表面自尊较高，但完全建立在外部认可上。一旦失去职位、身份标签，自我价值体系崩溃。</p></div>
+    <div class="ci" style="border-left-color:#854F0B"><h5>情绪内射调节</h5><p>将外界要求内化为自我苛责。努力的本质是"为认可而自我剥削"，持续压抑真实情绪。</p></div>
+    <div class="ci" style="border-left-color:#534AB7"><h5>关系浅层化</h5><p>自我与抚养者的心理融合未分化，难以建立真正独立、亲密的成人关系。</p></div>
+    <div class="ci" style="border-left-color:#534AB7"><h5>延迟但更剧烈的危机</h5><p>Marcia 指出，foreclosure 者遭遇失衡时，后果比其他状态更具破坏性 - 因为从未学过如何重建。</p></div>
+  </div>
+  <div class="cd">
+    <h3>中国社会如何批量制造 foreclosure</h3>
+    <div style="margin:6px 0"><span class="tg tg-a">高考选专业</span> 17 岁凭想象决定终身方向</div>
+    <div style="margin:6px 0"><span class="tg tg-a">社会节奏刚性</span> 升学-入职-结婚-生子，节点严丝合缝</div>
+    <div style="margin:6px 0"><span class="tg tg-a">偏离惩罚</span> 35 岁考公限制、空窗期歧视、同辈压力</div>
+    <div style="margin:6px 0"><span class="tg tg-a">内射调节</span> 将外界要求内化为自我苛责，"为认可而自我剥削"</div>
+  </div>
+  <div class="cd">
+    <h3>视频中的两个案例</h3>
+    <p><strong>朋友</strong> - 停职数年，每日 2 小时处理业务，生活松弛。作者看到后不是羡慕，而是强烈自我怀疑：原来自己习以为常的紧绷和内耗并非唯一答案。</p>
+    <p><strong>饺子导演</strong> - 华西医科大毕业后蛰伏 3 年 8 个月，自学 3D 动画，拒绝了"医生"身份的过早绑定。如果屈服于社会脚本，不会有《哪吒》。</p>
+  </div>
+</div>
+
+<div class="pnl" id="p3">
+  <div class="cd">
+    <h3>Gap Year 不是休假，是 moratorium 的入口</h3>
+    <p>心理学意义上，Gap Year 的价值不在于"休息"，而在于它创造了 Marcia 所说的<strong>moratorium（延缓探索期）</strong>的条件：脱离既有轨道，获得心理空间，主动探索"我是谁"和"我要什么"。</p>
+  </div>
+  <div class="cr">
+    <div class="c" style="border-top:3px solid #185FA5;border-radius:0"><h4 style="color:var(--text-info)">西方</h4><p>Gap Year 被视为"探索期"，企业甚至提供带薪休假。大学录取可 defer。社会容忍试错。</p></div>
+    <div class="c" style="border-top:3px solid #A32D2D;border-radius:0"><h4 style="color:var(--text-danger)">中国</h4><p>Gap = 职场"案底"。应届身份不可恢复。中国式 gap year 被异化为"备考年"或"内卷年"。</p></div>
+  </div>
+  <div class="cd">
+    <h3>Gap Year 为什么令人恐惧</h3>
+    <p>视频的核心洞察：年轻人不敢 gap 的根本原因<strong>不是怕没钱</strong>，而是怕在彻底松绑后被迫直面一个无法回避的终极问题 - "我的生活，真的有意义吗？"</p>
+    <p>一旦切断高强度约束环境，获得大把复盘时间，极大概率会得出一个令人崩溃的结论 - 过去几十年拼尽全力的活法，从头到尾全错了。</p>
+    <p style="font-size:0.8125rem;color:var(--text-tertiary)">但视频指出：这种崩溃恰恰是旧认知地基坍塌的信号。唯一的出路，是亲手重建一个忠于内在的真实自我。</p>
+  </div>
+  <div class="af">
+    <span class="st" style="background:#FAEEDA;color:#633806">Foreclosure</span><span class="ar">→</span>
+    <span class="st" style="background:#FCEBEB;color:#791F1F">Gap 崩溃期</span><span class="ar">→</span>
+    <span class="st" style="background:#E6F1FB;color:#0C447C">Moratorium</span><span class="ar">→</span>
+    <span class="st" style="background:#EAF3DE;color:#27500A">Achievement</span>
+  </div>
+</div>
+
+<div class="pnl" id="p4">
+  <div class="cd">
+    <h3>从 foreclosure 走向 achievement 的路径</h3>
+    <p>不一定需要完整的 gap year。关键是创造"心理上的 moratorium" - 在结构化生活中嵌入自我探索的空间。</p>
+  </div>
+  <div class="cd">
+    <h3>自我探索的三个维度</h3>
+    <div style="margin:8px 0"><span class="tg tg-b">职业/学术</span> 尝试不同领域，而非只走"安全路线"。实习、side project、跨学科课程。</div>
+    <div style="margin:8px 0"><span class="tg tg-g">价值观/信念</span> 审视哪些是自己的，哪些是父母和社会灌输的。写日记，与不同背景的人深度交流。</div>
+    <div style="margin:8px 0"><span class="tg tg-a">关系/角色</span> 探索"我想成为什么样的人"，而不是"别人期待我成为什么人"。</div>
+  </div>
+  <div class="cd">
+    <h3>一些具体练习</h3>
+    <p><strong>价值观排序</strong> - 列出 20 个你认为重要的价值（自由、安全、创造力、金钱、家庭...），排出真正的优先级，区分"我的"和"被灌输的"。</p>
+    <p><strong>"如果没人知道"测试</strong> - 如果没有任何社会评价，你明天会做什么？这个答案和你现在的生活差距有多大？</p>
+    <p><strong>角色剥离</strong> - 剥离职级、公司、社会标签后，"你"究竟是谁？（视频原话）</p>
+    <p><strong>小型实验</strong> - 不需要 gap year，用一个周末/假期去体验一种完全不同的生活方式。</p>
+  </div>
+</div>
+
+<footer>
+  <p>基于小红书视频"Gap Year不是休假，是人生系统的强制重启"整理</p>
+  <p>心理学理论来源：Erik Erikson (1968), James Marcia (1966)</p>
+  <p>中国数据来源：国家统计局、前程无忧、澎湃新闻</p>
+</footer>
+
+</div>
+
+<script>
+var dts=[
+  '<strong>身份扩散 (Diffusion)</strong> - 既没有探索，也没有承诺。对"我是谁"没有兴趣或感到迷茫。研究表明与抑郁、低自尊关联最强。在中国语境中，可能表现为"摆烂"或"佛系"。',
+  '<strong>同一性过早定型 (Foreclosure)</strong> - 没有探索就直接做出了承诺。典型例子：父亲做什么，儿子也做什么，从未思考过。表面很"稳"，但内心僵化、封闭、依赖权威。中国高考选专业就是典型案例。<em>这是视频讨论的核心状态。</em>',
+  '<strong>延缓/探索期 (Moratorium)</strong> - 正在积极探索，尚未做出承诺。这个阶段焦虑最高，但也是通向 achievement 的必经之路。Gap Year 本质上就是创造这个阶段的条件。Marcia 认为这是最有发展潜力的状态。',
+  '<strong>身份达成 (Achievement)</strong> - 经历了充分探索后做出的承诺。内在驱动、灵活思考、成熟的人际关系。研究显示与最高水平的心理健康和生活满意度相关。大多数人要到成年早期甚至更晚才能达到。'
+];
+function show(i){
+  document.querySelectorAll('.pnl').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.nav button').forEach(function(b){b.classList.remove('on')});
+  document.getElementById('p'+i).classList.add('on');
+  document.querySelectorAll('.nav button')[i].classList.add('on');
+}
+function showD(i){document.getElementById('det').innerHTML=dts[i]}
+</script>
+</body>
+</html>
