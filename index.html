@@ -350,7 +350,8 @@ footer {
     <p class="audio-sub" data-i18n="audio_sub">NotebookLM 生成</p>
   </div>
   <audio id="audioPlayer" controls preload="metadata">
-    <source id="audioSrc" src="audio.ogg" type="audio/ogg">
+    <source id="audioSrcOgg" src="audio.ogg" type="audio/ogg">
+    <source id="audioSrcM4a" src="audio.m4a" type="audio/mp4">
     <span data-i18n="audio_fallback">浏览器不支持音频播放</span>
   </audio>
 </div>
@@ -674,9 +675,11 @@ function applyLang(l) {
       if (!isNaN(idx) && d.dts[idx]) { el.innerHTML = d.dts[idx]; }
     }
   });
-  var audioSrc = document.getElementById('audioSrc');
-  if (audioSrc) {
-    audioSrc.src = l === 'zh' ? 'audio.ogg' : 'audio-en.ogg';
+  var audioSrcOgg = document.getElementById('audioSrcOgg');
+  var audioSrcM4a = document.getElementById('audioSrcM4a');
+  if (audioSrcOgg) {
+    audioSrcOgg.src = l === 'zh' ? 'audio.ogg' : 'audio-en.ogg';
+    audioSrcM4a.src = l === 'zh' ? 'audio.m4a' : 'audio-en.m4a';
     document.getElementById('audioPlayer').load();
   }
   try { localStorage.setItem('lang', l); } catch(e) {}
