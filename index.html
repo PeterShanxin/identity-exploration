@@ -318,9 +318,11 @@ footer {
 .audio-meta { flex: 1; min-width: 0; }
 .audio-meta .audio-title { font-size: 0.8125rem; font-weight: 500; margin: 0 0 2px; }
 .audio-meta .audio-sub { font-size: 0.6875rem; color: var(--text-tertiary); margin: 0; }
-.audio-block audio { display: none; }
+.audio-block audio { width: 100%; max-width: 320px; height: 36px; flex-shrink: 0; }
+.js-audio-ready .audio-block audio { display: none; }
+.audio-controls { display: none; }
+.js-audio-ready .audio-controls { display: flex; }
 .audio-controls {
-  display: flex;
   align-items: center;
   gap: 10px;
   flex: 1;
@@ -435,14 +437,15 @@ footer {
     <button type="button" class="audio-play-btn" id="audioPlayBtn" aria-label="Play" onclick="toggleAudio()">
       <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,4 20,12 6,20"/></svg>
     </button>
-    <div class="audio-progress-wrap" id="audioProgressWrap" onclick="seekAudio(event)">
+    <div class="audio-progress-wrap" id="audioProgressWrap" role="slider" tabindex="0" aria-label="Audio progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" onclick="seekAudio(event)" onkeydown="seekAudioKey(event)">
       <div class="audio-progress-bar" id="audioProgressBar"></div>
     </div>
     <span class="audio-time" id="audioTime">0:00</span>
   </div>
-  <audio id="audioPlayer" preload="metadata">
+  <audio id="audioPlayer" controls preload="metadata">
     <source id="audioSrcOgg" src="audio.ogg" type="audio/ogg">
     <source id="audioSrcM4a" src="audio.m4a" type="audio/mp4">
+    <span data-i18n="audio_fallback">浏览器不支持音频播放</span>
   </audio>
 </div>
 
@@ -784,7 +787,8 @@ function show(i) {
   document.querySelectorAll('.nav button').forEach(function(b) { b.classList.remove('on'); });
   document.getElementById('p' + i).classList.add('on');
   document.querySelectorAll('.nav button')[i].classList.add('on');
-  document.querySelector('.nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  var motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelector('.nav').scrollIntoView({ behavior: motionOk ? 'smooth' : 'auto', block: 'start' });
 }
 
 function showD(i, el) {
@@ -797,15 +801,32 @@ function showD(i, el) {
 
 function toggleAudio() {
   var a = document.getElementById('audioPlayer');
-  if (a.paused) { a.play(); } else { a.pause(); }
+  if (a.paused) {
+    a.play().catch(function() { /* ignore autoplay/source errors */ });
+  } else {
+    a.pause();
+  }
 }
 
 function seekAudio(e) {
   var a = document.getElementById('audioPlayer');
   var wrap = document.getElementById('audioProgressWrap');
   var rect = wrap.getBoundingClientRect();
-  var pct = (e.clientX - rect.left) / rect.width;
+  if (rect.width === 0) return;
+  var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
   if (a.duration) { a.currentTime = pct * a.duration; }
+}
+
+function seekAudioKey(e) {
+  var a = document.getElementById('audioPlayer');
+  if (!a.duration) return;
+  var step = 5;
+  if (e.key === 'ArrowRight') { a.currentTime = Math.min(a.duration, a.currentTime + step); }
+  else if (e.key === 'ArrowLeft') { a.currentTime = Math.max(0, a.currentTime - step); }
+  else if (e.key === 'Home') { a.currentTime = 0; }
+  else if (e.key === 'End') { a.currentTime = a.duration; }
+  else { return; }
+  e.preventDefault();
 }
 
 function formatTime(s) {
@@ -832,20 +853,35 @@ function formatTime(s) {
     }
   }
 
+  document.documentElement.classList.add('js-audio-ready');
+
+  function resetAudioUI() {
+    setPlayIcon(false);
+    bar.style.width = '0%';
+    timeEl.textContent = '0:00';
+    var wrap = document.getElementById('audioProgressWrap');
+    if (wrap) wrap.setAttribute('aria-valuenow', '0');
+  }
+
   a.addEventListener('play', function() { setPlayIcon(true); });
   a.addEventListener('pause', function() { setPlayIcon(false); });
   a.addEventListener('ended', function() { setPlayIcon(false); });
+  a.addEventListener('emptied', resetAudioUI);
+  a.addEventListener('loadstart', resetAudioUI);
   a.addEventListener('timeupdate', function() {
     var pct = a.duration ? (a.currentTime / a.duration * 100) : 0;
     bar.style.width = pct + '%';
     timeEl.textContent = formatTime(a.currentTime);
+    var wrap = document.getElementById('audioProgressWrap');
+    if (wrap) wrap.setAttribute('aria-valuenow', Math.round(pct).toString());
   });
 
+  var scrollEl = document.getElementById('scrollProgress');
   window.addEventListener('scroll', function() {
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     var pct = scrollHeight > 0 ? (scrollTop / scrollHeight * 100) : 0;
-    document.getElementById('scrollProgress').style.width = pct + '%';
+    scrollEl.style.width = pct + '%';
   }, { passive: true });
 
   var saved = null;
